@@ -1,0 +1,7 @@
+1. First thought was that the map would look like minesweeper, the game. Then needed to find common delivery routes and thought of the Euclidean distance but wouldn't work so we could use the Manhattan distance.
+At the end implemented a simple array map that plots the pizzerias and the delivery routes.
+
+2. Code Available on main.py
+
+3. Complexity of the problem is constant at O(M*K) where M is the number of the pizzerias and K is the number of delivery range.
+The complexity's solution can be improved by avoiding some of the formation of cycles in our algorithm or by using only the max range instead of the whole delivery range.
