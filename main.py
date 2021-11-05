@@ -54,10 +54,13 @@ class Town:
 
             # Adding delivery route to the south of the pizzeria
             for i in range(k + 1):
+                # Boundaries below the map
                 if x_loc + k - i >= N:
                     pass
+                # Boundaries left of the map
                 elif y_loc - i <0:
                     self.town[x_loc + k - i, 0:pizzeria[0][1] + i] += 1
+                # Boundaries right of the map
                 elif pizzeria[0][1] + i >= N:
                     self.town[x_loc + k - i, y_loc - i:N] += 1
                 else:
@@ -65,10 +68,15 @@ class Town:
 
             # Adding delivery route to the north of the pizzeria
             for i in range(k + 1):
+                # Boundaries above the map
                 if x_loc - k + i < 0:
                     pass
+                # Boundaries left of the map
                 elif y_loc - i <0:
                     self.town[x_loc - k + i, 0:pizzeria[0][1] + i] += 1
+                # Boundaries right of the map
+                elif pizzeria[0][1] + i >= N:
+                    self.town[x_loc - k + i, y_loc - i:N] += 1
                 else:
                     self.town[x_loc - k + i, y_loc - i:pizzeria[0][1]+ i] += 1
 
