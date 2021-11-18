@@ -1,3 +1,5 @@
-Change variables in input.txt file.
+- Install requirements.txt
 
-Run main.py to generate output
+- Change variables in input.txt file.
+
+- Run main.py to generate output
