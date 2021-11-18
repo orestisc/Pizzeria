@@ -2,16 +2,17 @@ import numpy as np
 
 
 def read_file(file):
-    """ input: txt file
-        output: n = Dimensions
-                m = Number of pizzerias
-                m_info = Information of pizzerias, location and maximum delivery distance"""
+    """ Input: txt file
+        Output: N = Dimensions
+                M = Number of pizzerias
+                M_info = Information of pizzerias, location and maximum delivery distance"""
 
     lines = open(file).readlines()
 
     # First line
-    n = int(lines[0].split()[0])
-    m = int(lines[0].split()[1])
+    f_line = lines[0].split()
+    n = int(f_line[0])
+    m = int(f_line[1])
 
     if n < 1 or n > 1000:
         raise ValueError('Dimension should be on interval [1, 1000]')
@@ -20,9 +21,10 @@ def read_file(file):
     m_info = []
     for line in range(1, m + 1):
 
-        x = int(lines[line].split()[0])
-        y = int(lines[line].split()[1])
-        k = int(lines[line].split()[2])
+        read_line = lines[line].split()
+        x = int(read_line[0])
+        y = int(read_line[1])
+        k = int(read_line[2])
         info = [(x, y), k]
         m_info.append(info)
 
@@ -39,6 +41,10 @@ def read_file(file):
 class Town:
 
     def __init__(self, N, M, M_info):
+        """  Input: N = Dimensions
+                    M = Number of pizzerias
+                    M_info = Information of pizzerias, location and maximum delivery distance
+            Output: np.array of town map with pizzerias plotted"""
 
         self.size = N
         self.town = np.zeros((N, N), dtype=np.int8)
@@ -52,7 +58,7 @@ class Town:
             y_loc = pizzeria[0][1] - 1
             k = pizzeria[1]
 
-            # Adding delivery route to the south of the pizzeria
+            # Adding delivery route from the furthest south point and further north point of the pizzeria
             for i in range(k + 1):
                 # Boundaries below the map
                 if x_loc + k - i >= N:
@@ -66,13 +72,11 @@ class Town:
                 else:
                     self.town[x_loc + k - i, y_loc - i:pizzeria[0][1]+ i] += 1
 
-            # Adding delivery route to the north of the pizzeria
-            for i in range(k + 1):
                 # Boundaries above the map
                 if x_loc - k + i < 0:
                     pass
                 # Boundaries left of the map
-                elif y_loc - i <0:
+                elif y_loc - i < 0:
                     self.town[x_loc - k + i, 0:pizzeria[0][1] + i] += 1
                 # Boundaries right of the map
                 elif pizzeria[0][1] + i >= N:
@@ -81,12 +85,12 @@ class Town:
                     self.town[x_loc - k + i, y_loc - i:pizzeria[0][1]+ i] += 1
 
             # Erasing duplicated centre delivery route
-            if y_loc - i < 0:
-                self.town[x_loc, 0:pizzeria[0][1] + i] -= 1
-            elif pizzeria[0][1] + i >= N:
-                self.town[x_loc, y_loc - i:N] -= 1
+            if y_loc - k < 0:
+                self.town[x_loc, 0:pizzeria[0][1] + k] -= 1
+            elif pizzeria[0][1] + k >= N:
+                self.town[x_loc, y_loc - k:N] -= 1
             else:
-                self.town[x_loc, y_loc - i:pizzeria[0][1] + i] -= 1
+                self.town[x_loc, y_loc - k:pizzeria[0][1] + k] -= 1
 
     def display(self):
         print(self.town.copy())
