@@ -58,6 +58,11 @@ class Town:
             y_loc = pizzeria[0][1] - 1
             k = pizzeria[1]
 
+            # Maximum distance if pizzeria is on (1,1) to reach the furthest point
+            max_dist = self.size * 2
+            if k > max_dist:
+                k = max_dist
+
             # Adding delivery route from the furthest south point and further north point of the pizzeria
             for i in range(k + 1):
                 # Boundaries below the map
