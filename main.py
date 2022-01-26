@@ -44,7 +44,7 @@ class Town:
         """  Input: N = Dimensions
                     M = Number of pizzerias
                     M_info = Information of pizzerias, location and maximum delivery distance
-            Output: np.array of town map with pizzerias plotted"""
+            Output: np.array of town map with pizzerias mapped"""
 
         self.size = N
         self.town = np.zeros((N, N), dtype=np.int8)
